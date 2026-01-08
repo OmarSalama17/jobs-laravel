@@ -18,7 +18,7 @@ class CommentController extends Controller
     function create()
     {
         Comment::create([
-            'content' => "aa mm dd",
+            'content' => "dd ss dd",
             'author' => 'omar',
             'post_id' => 1
         ]);
