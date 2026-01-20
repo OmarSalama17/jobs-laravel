@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
-use App\Models\Comment;
+use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class PostApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,23 +14,8 @@ class CommentController extends Controller
     public function index()
     {
         //
-        $data = Comment::all();
-        return view("/comment.index", ["data" => $data]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-        Comment::create([
-            'content' => "dd ss dd",
-            'author' => 'omar',
-            'post_id' => 1
-        ]);
-
-        return redirect('/comments');
+        $data = Post::get();
+        return response($data);
     }
 
     /**
@@ -38,6 +24,8 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+        $data = Post::create(request()->all());
+        return response($data);
     }
 
     /**
@@ -46,14 +34,9 @@ class CommentController extends Controller
     public function show(string $id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $data = Post::find($id);
+        if (!$data) return response()->json(['message' => 'post not found'], 404);
+        return response($data, 200);
     }
 
     /**
@@ -62,6 +45,9 @@ class CommentController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $data = Post::find($id);
+        $data->update(request()->all());
+        return response($data, 200);
     }
 
     /**
@@ -70,5 +56,8 @@ class CommentController extends Controller
     public function destroy(string $id)
     {
         //
+        $data = Post::find($id);
+        $data->delete();
+        return response(['message' => 'deleted post'], 204);
     }
 }

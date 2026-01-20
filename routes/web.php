@@ -16,9 +16,13 @@ Route::resource('post', PostController::class);
 // Route::get('/post/{id}', [PostController::class, "show"]);
 // Route::get('/post/delete/{id}', [PostController::class, "delete"]);
 
-Route::get("/comments", [CommentController::class, 'index']);
-Route::get("/comments/create", [CommentController::class, 'create']);
+// Route::get("/comments", [CommentController::class, 'index']);
+// Route::get("/comments/create", [CommentController::class, 'create']);
 
-Route::get('/tag', [TagController::class, "index"]);
-Route::get('/tag/create', [TagController::class, "create"]);
+// Route::get('/tag', [TagController::class, "index"]);
+// Route::get('/tag/create', [TagController::class, "create"]);
+
+Route::resource('tag', TagController::class);
 Route::get('/tag/testMany', [TagController::class, "testManyToMany"]);
+
+Route::resource('comment', CommentController::class);
