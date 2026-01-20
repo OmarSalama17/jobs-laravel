@@ -7,32 +7,63 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    //
-    function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
+        //
         $data = Post::all();
         return view("/post.index", ["data" => $data]);
     }
 
-    function show($id)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
         $post = Post::findOrFail($id);
         return view("/post.show", ['data' => $post]);
     }
 
-    function create()
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        Post::create([
-            'title' => "front2",
-            'body' => 'frontEnd2',
-            'author' => 'omar2',
-            'published' => true
-        ]);
-
-        return redirect('/post');
+        //
     }
-    function delete($id)
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
-        Post::destroy($id);
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

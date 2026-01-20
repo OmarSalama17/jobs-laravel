@@ -11,10 +11,10 @@ Route::get('/', function () {
 });
 
 Route::get('/job', [jobController::class, "index"]);
-Route::get('/post', [PostController::class, "index"]);
+Route::resource('post', PostController::class);
+// Route::get('/post', [PostController::class, "index"]);
 // Route::get('/post/{id}', [PostController::class, "show"]);
-Route::get('/post/create', [PostController::class, "create"]);
-Route::get('/post/delete/{id}', [PostController::class, "delete"]);
+// Route::get('/post/delete/{id}', [PostController::class, "delete"]);
 
 Route::get("/comments", [CommentController::class, 'index']);
 Route::get("/comments/create", [CommentController::class, 'create']);
