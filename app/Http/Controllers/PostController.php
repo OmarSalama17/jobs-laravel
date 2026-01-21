@@ -23,6 +23,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('/post.create');
     }
 
     /**
@@ -31,6 +32,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+            'body' => 'required',
+            'published' => 'required',
+        ]);
+        $data = $request->all();
+        print_r($data);
     }
 
     /**
