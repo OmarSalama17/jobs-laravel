@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        $data = Post::all();
+        $data = Post::latest()->paginate(10);
         return view("/post.index", ["data" => $data]);
     }
 
@@ -29,17 +30,14 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
-        $validate = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'body' => 'required',
-            'published' => 'required',
-        ]);
-        $data = $request->all();
-        print_r($data);
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->author = $request->input('author');
+        $post->body = $request->input('body');
+        $post->published = $request->has('published');
+        $post->save();
     }
 
     /**
@@ -58,14 +56,23 @@ class PostController extends Controller
     public function edit(string $id)
     {
         //
+        $post = Post::findOrFail($id);
+        return view('/post.edit', ['data' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
         //
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->author = $request->input('author');
+        $post->body = $request->input('body');
+        $post->published = $request->has('published');
+        $post->save();
+        // print_r($request->all());
     }
 
     /**
