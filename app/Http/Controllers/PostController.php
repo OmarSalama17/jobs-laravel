@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -46,8 +47,15 @@ class PostController extends Controller
     public function show(string $id)
     {
         //
-        $post = Post::findOrFail($id);
-        return view("/post.show", ['data' => $post]);
+
+        $data = Post::with('comments')->findOrFail($id);
+
+        $editComment = null;
+        if (request()->has('edit_id')) {
+            $editComment = Comment::find(request('edit_id'));
+        }
+
+        return view('post.show', compact('data', 'editComment'));
     }
 
     /**
@@ -81,5 +89,8 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect("/post");
     }
 }

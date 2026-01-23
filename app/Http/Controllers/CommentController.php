@@ -23,13 +23,14 @@ class CommentController extends Controller
     public function create()
     {
         //
-        Comment::create([
-            'content' => "dd ss dd",
-            'author' => 'omar',
-            'post_id' => 1
-        ]);
 
-        return redirect('/comments');
+        // Comment::create([
+        //     'content' => "dd ss dd",
+        //     'author' => 'omar',
+        //     'post_id' => 1
+        // ]);
+
+        //
     }
 
     /**
@@ -38,6 +39,14 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+        // print_r($request->all());
+        $comment = new Comment();
+        $comment->post_id =  $request->input("post_id");
+        $comment->author =  "user";
+        $comment->content =  $request->input("comment");
+        $comment->save();
+
+        return redirect("/post/$request->post_id");
     }
 
     /**
@@ -70,5 +79,8 @@ class CommentController extends Controller
     public function destroy(string $id)
     {
         //
+        $comment= Comment::find($id);
+        $comment->delete();
+        return redirect("/post");
     }
 }
