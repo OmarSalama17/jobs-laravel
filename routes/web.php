@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\jobController;
 use App\Http\Controllers\PostController;
@@ -26,3 +27,11 @@ Route::resource('tag', TagController::class);
 Route::get('/tag/testMany', [TagController::class, "testManyToMany"]);
 
 Route::resource('comment', CommentController::class);
+
+Route::get('/sign-up', [AuthController::class, "showSignUpForm"]);
+Route::get('/sign-in', [AuthController::class, "showLoginForm"]);
+
+Route::post('/sign-up', [AuthController::class, "signUp"]);
+Route::post('/sign-in', [AuthController::class, "login"]);
+Route::post('/logout', [AuthController::class, "logout"]);
+
